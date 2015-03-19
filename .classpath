@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Users/JanIdar/Documents/Jars/BlocksHub.jar"/>
@@ -8,5 +9,15 @@
 	<classpathentry kind="lib" path="C:/Users/JanIdar/Documents/Jars/PermissionsEx-1.23.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/JanIdar/Documents/Jars/worldedit-bukkit-6.0.2-SNAPSHOT-dist.jar"/>
 	<classpathentry kind="lib" path="C:/Users/JanIdar/Documents/Jars/ProtocolLib.jar"/>
+=======
+	<classpathentry kind="lib" path="classpaths/spigot-api-1.8-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="classpaths/spigot-1.8-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="classpaths/BlocksHub.jar"/>
+	<classpathentry kind="lib" path="classpaths/PermissionsEx.jar"/>
+	<classpathentry kind="lib" path="classpaths/ProtocolLib.jar"/>
+	<classpathentry kind="lib" path="classpaths/worldedit-bukkit-6.0.2-SNAPSHOT-dist.jar"/>
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 	<classpathentry kind="output" path="bin"/>
 </classpath>

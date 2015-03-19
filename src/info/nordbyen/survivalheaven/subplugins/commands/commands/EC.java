@@ -17,8 +17,12 @@ import org.bukkit.entity.Player;
 /**
  * The Class EC.
  */
+<<<<<<< HEAD
 public class EC implements CommandExecutor
 {
+=======
+public class EC implements CommandExecutor {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 
 	/*
 	 * (non-Javadoc)
@@ -29,6 +33,7 @@ public class EC implements CommandExecutor
 	 */
 	@Override
 	public boolean onCommand(final CommandSender Sender, final Command command,
+<<<<<<< HEAD
 			final String commandLabel, final String[] args)
 	{
 		if (Sender instanceof Player)
@@ -42,6 +47,20 @@ public class EC implements CommandExecutor
 				}
 			} else
 			{
+=======
+			final String commandLabel, final String[] args) {
+		if (Sender instanceof Player) {
+			final Player p = (Player) Sender;
+			if (p.hasPermission("sh.ec")) {
+				if (command.getName().equalsIgnoreCase("ec")) {
+					if (args.length == 0) {
+						p.openInventory(p.getEnderChest());
+					} else {
+						p.sendMessage(ChatColor.RED + "Feil bruk av kommando");
+					}
+				}
+			} else {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 				p.sendMessage(ChatColor.RED + "Du har ikke permission!");
 			}
 		}

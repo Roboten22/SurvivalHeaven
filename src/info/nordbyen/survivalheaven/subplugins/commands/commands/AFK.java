@@ -22,15 +22,22 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+<<<<<<< HEAD
 import org.bukkit.event.player.PlayerChatEvent;
+=======
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * The Class AFK.
  */
+<<<<<<< HEAD
 @SuppressWarnings("deprecation")
 public class AFK implements CommandExecutor
 {
+=======
+public class AFK implements CommandExecutor {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 
 	/**
 	 * The listener interface for receiving AFK events. The class that is
@@ -42,9 +49,14 @@ public class AFK implements CommandExecutor
 	 *
 	 * @see AFKEvent
 	 */
+<<<<<<< HEAD
 	public class AFKListener implements Listener
 	{
 
+=======
+	public class AFKListener implements Listener {
+		
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 		/**
 		 * On move.
 		 *
@@ -52,6 +64,7 @@ public class AFK implements CommandExecutor
 		 *            the e
 		 */
 		@EventHandler
+<<<<<<< HEAD
 		public void onMove(PlayerMoveEvent e)
 		{
 			Location from = e.getFrom();
@@ -71,6 +84,18 @@ public class AFK implements CommandExecutor
 		public void onChat(PlayerChatEvent e)
 		{
 			if (e.getMessage() == null)
+=======
+		public void onMove(PlayerMoveEvent e) {
+			Location from = e.getFrom();
+			Location to = e.getTo();
+			if (from.getX() == to.getX())
+				return;
+			if (from.getY() == to.getY())
+				return;
+			if (from.getZ() == to.getZ())
+				return;
+			if (from.getWorld().getName().equals(to.getWorld().getName()))
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 				return;
 			hashmap.remove(e.getPlayer().getName());
 		}
@@ -82,8 +107,12 @@ public class AFK implements CommandExecutor
 	/**
 	 * Instantiates a new afk.
 	 */
+<<<<<<< HEAD
 	public AFK()
 	{
+=======
+	public AFK() {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 		Bukkit.getPluginManager().registerEvents(new AFKListener(),
 				SH.getPlugin());
 	}
@@ -97,6 +126,7 @@ public class AFK implements CommandExecutor
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd,
+<<<<<<< HEAD
 			final String label, final String[] args)
 	{
 		if (!(sender instanceof Player))
@@ -109,12 +139,26 @@ public class AFK implements CommandExecutor
 			final String player = sender.getName();
 			if (!hashmap.contains(player))
 			{
+=======
+			final String label, final String[] args) {
+		if (!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.RED + "Du må være en spiller.");
+			return true;
+		}
+		if ((sender instanceof Player)) {
+			final String player = sender.getName();
+			if (!hashmap.contains(player)) {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 				hashmap.add(player);
 				Bukkit.broadcastMessage(ChatColor.DARK_RED + player
 						+ ChatColor.RED + " er nå AFK.");
 				return true;
+<<<<<<< HEAD
 			} else
 			{
+=======
+			} else {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 				hashmap.remove(player);
 				Bukkit.broadcastMessage(ChatColor.DARK_GREEN + player
 						+ ChatColor.GREEN + " er ikke lenger AFK.");

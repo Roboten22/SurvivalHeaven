@@ -14,8 +14,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+<<<<<<< HEAD
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+=======
+import net.md_5.bungee.api.ChatColor;
+
+import org.bukkit.Bukkit;
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

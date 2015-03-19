@@ -99,12 +99,15 @@ public class RankManager implements IRankManager {
 		final RankType rank = RankType.getRankFromId(pd.getRank());
 		return rank;
 	}
+<<<<<<< HEAD
 	
 	private static RankManager instance = new RankManager();
 	public static RankManager getInstance()
 	{
 		return instance;
 	}
+=======
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 
 	/*
 	 * (non-Javadoc)

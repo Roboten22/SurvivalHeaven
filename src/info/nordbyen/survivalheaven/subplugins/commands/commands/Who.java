@@ -8,9 +8,12 @@
  */
 package info.nordbyen.survivalheaven.subplugins.commands.commands;
 
+<<<<<<< HEAD
 import info.nordbyen.survivalheaven.api.rankmanager.RankType;
 import info.nordbyen.survivalheaven.subplugins.rankmanager.RankManager;
 
+=======
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,8 +24,12 @@ import org.bukkit.entity.Player;
 /**
  * The Class Who.
  */
+<<<<<<< HEAD
 public class Who implements CommandExecutor
 {
+=======
+public class Who implements CommandExecutor {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 
 	/*
 	 * (non-Javadoc)
@@ -33,6 +40,7 @@ public class Who implements CommandExecutor
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command,
+<<<<<<< HEAD
 			final String label, final String[] args)
 	{
 		if (sender.hasPermission("sh.who"))
@@ -94,12 +102,22 @@ public class Who implements CommandExecutor
 					sender.sendMessage(ChatColor.GREEN
 							+ "Alle i staben pålogget:");
 					sender.sendMessage(stab.toString());
+=======
+			final String label, final String[] args) {
+		if (sender.hasPermission("sh.who")) {
+			if (command.getName().equalsIgnoreCase("who")) {
+				if (args.length == 0) {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 					sender.sendMessage(ChatColor.GREEN + "Antall pålogget: "
 							+ ChatColor.WHITE
 							+ Bukkit.getOnlinePlayers().size());
 					return true;
+<<<<<<< HEAD
 				} else if (args.length == 1)
 				{
+=======
+				} else if (args.length == 1) {
+>>>>>>> 1d5076231d2c0b13f688aeea7169c973da216e6f
 					final Player v = Bukkit.getServer().getPlayer(args[0]);
 					sender.sendMessage((v == null ? ChatColor.GOLD + "[Alarm] "
 							: ChatColor.GREEN)
