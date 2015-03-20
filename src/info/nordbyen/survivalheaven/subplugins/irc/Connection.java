@@ -8,6 +8,8 @@
  */
 package info.nordbyen.survivalheaven.subplugins.irc;
 
+import info.nordbyen.survivalheaven.SH;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -552,7 +554,7 @@ public class Connection implements Runnable {
 	 */
 	public static void main(final String[] args) throws Throwable {
 		if (args.length == 0) {
-			System.out.println("Usage: java jw.jircs.Connection <servername>");
+			SH.log("Usage: java jw.jircs.Connection <servername>");
 			return;
 		}
 		globalServerName = args[0];
@@ -634,7 +636,7 @@ public class Connection implements Runnable {
 					out.flush();
 				}
 			} catch (final Exception e) {
-				System.out.println("Outqueue died");
+				SH.log("Outqueue died");
 				outQueue.clear();
 				outQueue = null;
 				e.printStackTrace();
@@ -667,7 +669,7 @@ public class Connection implements Runnable {
 		final InetSocketAddress address = (InetSocketAddress) socket
 				.getRemoteSocketAddress();
 		hostname = address.getAddress().getHostAddress();
-		System.out.println("Connection from host " + hostname);
+		SH.log("Connection from host " + hostname);
 		outThread.start();
 		final InputStream socketIn = socket.getInputStream();
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -721,7 +723,7 @@ public class Connection implements Runnable {
 	 *             the exception
 	 */
 	private void processLine(String line) throws Exception {
-		System.out.println("Processing line from " + nick + ": " + line);
+		SH.log("Processing line from " + nick + ": " + line);
 		String prefix = "";
 		if (line.startsWith(":")) {
 			final String[] tokens = line.split(" ", 2);
@@ -810,7 +812,7 @@ public class Connection implements Runnable {
 	public void send(final String s) {
 		final Queue<String> testQueue = outQueue;
 		if (testQueue != null) {
-			System.out.println("Sending line to " + nick + ": " + s);
+			SH.log("Sending line to " + nick + ": " + s);
 			testQueue.add(s);
 		}
 	}

@@ -52,7 +52,7 @@ public class AnnoSubPluginManager implements IAnnoSubPluginManager {
 			return;
 		if (classes.containsKey(klass))
 			return;
-		Bukkit.getConsoleSender().sendMessage(
+		SH.log(
 				ChatColor.GRAY + "Registrerer " + ChatColor.GOLD
 						+ subPluginAnno.name());
 		classes.put(klass, false);
@@ -90,7 +90,7 @@ public class AnnoSubPluginManager implements IAnnoSubPluginManager {
 					.getAnnotation(SurvivalHeavenSubPlugin.class);
 			if (subPluginAnno == null)
 				return;
-			Bukkit.getConsoleSender().sendMessage(
+			SH.log(
 					ChatColor.GRAY + "Starter disabling av " + ChatColor.GOLD
 							+ subPluginAnno.name());
 			final HashMap<Method, Annotation> methodAnnotTypes = getMethodsAnnotatedWith(
@@ -139,7 +139,7 @@ public class AnnoSubPluginManager implements IAnnoSubPluginManager {
 					.getAnnotation(SurvivalHeavenSubPlugin.class);
 			if (subPluginAnno == null)
 				return;
-			Bukkit.getConsoleSender().sendMessage(
+			SH.log(
 					ChatColor.GRAY + "Starter enabling av " + ChatColor.GOLD
 							+ subPluginAnno.name());
 			final HashMap<Method, Annotation> methodAnnotTypes = getMethodsAnnotatedWith(

@@ -49,7 +49,7 @@ public class RankManagerListener implements Listener {
 			o.sendMessage(p.getDisplayName() + ChatColor.RESET + ": "
 					+ ChatColor.GRAY + e.getMessage());
 		}
-		Bukkit.getConsoleSender().sendMessage(
+		SH.log(
 				p.getDisplayName() + ChatColor.RESET + ": " + ChatColor.GRAY
 						+ e.getMessage());
 	}

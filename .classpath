@@ -3,7 +3,7 @@
 	<classpathentry kind="lib" path="classpaths/spigot-api-1.8-R0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="classpaths/spigot-1.8-R0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_65"/>
 	<classpathentry kind="lib" path="classpaths/BlocksHub.jar"/>
 	<classpathentry kind="lib" path="classpaths/PermissionsEx.jar"/>
 	<classpathentry kind="lib" path="classpaths/ProtocolLib.jar"/>

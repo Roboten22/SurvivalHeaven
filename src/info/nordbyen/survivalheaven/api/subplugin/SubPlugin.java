@@ -43,7 +43,7 @@ public abstract class SubPlugin {
 		this.name = name;
 		this.plugin = SH.getPlugin();
 		this.manager = SH.getManager();
-		Bukkit.getConsoleSender().sendMessage(
+		SH.log(
 				ChatColor.GOLD + "Enabling subplugin: " + ChatColor.YELLOW
 						+ name);
 	}

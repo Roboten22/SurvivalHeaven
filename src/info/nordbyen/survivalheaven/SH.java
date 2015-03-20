@@ -33,6 +33,7 @@ import info.nordbyen.survivalheaven.subplugins.playerdata.NoteManager;
 import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManager;
 import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManagerPlugin;
 import info.nordbyen.survivalheaven.subplugins.playerdata.WarningManager;
+import info.nordbyen.survivalheaven.subplugins.playerheads.PlayerHeads;
 import info.nordbyen.survivalheaven.subplugins.rankmanager.RankManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionUpdater;
@@ -410,6 +411,7 @@ public class SH extends JavaPlugin implements ISH {
 		getSubPluginManager().addSubPlugin(
 				new PlayerDataManagerPlugin("PlayerDataManager"));
 		getSubPluginManager().addSubPlugin(new Commands("Kommandoer"));
+		getSubPluginManager().addSubPlugin(new PlayerHeads("SpillerHoder"));
 		// spm.addSubPlugin(new RemoteBukkitPlugin("RemoteConsole"));
 		// spm.addSubPlugin( new Ligg( "LiggTester" ) );
 		getAnnoSubPluginManager().addClass(InfinityDispenser.class);
@@ -489,6 +491,19 @@ public class SH extends JavaPlugin implements ISH {
 		if (!DEBUG)
 			return;
 		for (final Object s : strings) {
+			
+			String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
+		    String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+		    String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+		    int lineNumber = Thread.currentThread().getStackTrace()[2].getLineNumber();
+			log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.YELLOW + className + "#" + methodName + "():" + lineNumber + ChatColor.AQUA + " called by:");
+			
+			fullClassName = Thread.currentThread().getStackTrace()[3].getClassName();
+		    className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+		    methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
+		    lineNumber = Thread.currentThread().getStackTrace()[3].getLineNumber();
+		    log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.YELLOW + className + "#" + methodName + "():" + lineNumber);
+			
 			log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.GRAY + s);
 		}
 	}
