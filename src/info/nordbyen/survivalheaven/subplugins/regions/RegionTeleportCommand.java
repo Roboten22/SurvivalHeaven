@@ -30,7 +30,7 @@ public class RegionTeleportCommand extends AbstractCommand {
 	public RegionTeleportCommand() {
 		super("nord", "/<command>",
 				"Kommandoer for å teleportere til utpostene", Arrays
-						.asList(new String[] { "sør", "nord", "øst", "vest", "west",
+						.asList(new String[] { "sør", "nord", "øst", "vest",
 								"spawn" }));
 		register();
 	}
@@ -63,7 +63,7 @@ public class RegionTeleportCommand extends AbstractCommand {
 			p.sendMessage(ChatColor.GREEN + "Teleporterer til øst");
 			p.teleport(new Location(Bukkit.getWorld("NyVerden"), 6269.5, 65.5,
 					780.5, 180, 0));
-		} else if (label.equalsIgnoreCase("vest") || label.equalsIgnoreCase("west")) {
+		} else if (label.equalsIgnoreCase("vest")) {
 			p.sendMessage(ChatColor.GREEN + "Teleporterer til vest");
 			p.teleport(new Location(Bukkit.getWorld("NyVerden"), -5774, 73, 95));
 		} else if (label.equalsIgnoreCase("spawn")) {

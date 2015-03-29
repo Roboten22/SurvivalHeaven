@@ -60,7 +60,6 @@ public class BlockProtectionListener implements Listener {
 		if( !SH.getManager().getRegionManager().getRegionAt( b.getLocation() ).isBp() ) {
 			return;
 		}
-		
 		if ((b.getType() != Material.AIR) && (b.getType() != Material.WATER)
 				&& (b.getType() != Material.LAVA)) {
 			final IPlayerData pd = SH.getManager().getBlockManager()
@@ -69,15 +68,7 @@ public class BlockProtectionListener implements Listener {
 			{
 				final String uuid = pd.getUUID();
 				if (!uuid.equals(p.getUniqueId().toString())) {
-					final boolean canBreak = SH
-							.getManager()
-							.getFriendManager()
-							.isFriends(
-									pd,
-									SH.getManager()
-											.getPlayerDataManager()
-											.getPlayerData(
-													p.getUniqueId().toString()));
+					final boolean canBreak = SH.getManager().getFriendManager().isFriends(pd,SH.getManager().getPlayerDataManager().getPlayerData(p.getUniqueId().toString()));
 					if (!canBreak) // ikke ( venn eller workmode )
 					{
 						FancyMessages.sendActionBar(p, ChatColor.RED
@@ -101,9 +92,11 @@ public class BlockProtectionListener implements Listener {
 		final Player p = e.getPlayer();
 		if (b == null)
 			return;
-		
+
+
+
 		if( !SH.getManager().getRegionManager().getRegionAt( b.getLocation() ).isBp() ) {
-			return;
+				return;
 		}
 
 		if (e.getAction() == Action.PHYSICAL) {

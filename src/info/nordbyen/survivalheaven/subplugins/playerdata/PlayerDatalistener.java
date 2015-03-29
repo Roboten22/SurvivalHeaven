@@ -20,15 +20,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
 /**
  * The Class PlayerDatalistener.
  */
+@SuppressWarnings("deprecation")
 public class PlayerDatalistener implements Listener {
 
 	/**
@@ -57,16 +58,7 @@ public class PlayerDatalistener implements Listener {
 	 * @param e
 	 *            the e
 	 */
-	@EventHandler( priority = EventPriority.LOWEST )
-	public void onJoin(final PlayerLoginEvent e) {
-		if( e.getPlayer().getUniqueId().toString().equalsIgnoreCase( "557275f860c34801b2789066a9f3591e" ) || e.getPlayer().getUniqueId().toString().equalsIgnoreCase( "557275f8-60c3-4801-b278-9066a9f3591e" ) ) {
-			e.disallow( Result.KICK_BANNED, ChatColor.GREEN + "Hei Joakim Heimvik :P\n" + ChatColor.RED + "Du er bannet for misstillit og faenskap\n" + ChatColor.AQUA + "Jeg rekker ikke møte deg denne måneden, men kanskje neste?\n" + ChatColor.GREEN + "Addressen din er Holmedalsvegen 177, 5453 Utåker?\nOg telefonnummeret ditt er 413 72 784?\n" + ChatColor.BLUE + "Vi snakkes :P\n" + ChatColor.GOLD + "Du blir unbannet 21. mars klokken 15 :P");
-			final IPlayerData pd = SH.getManager().getPlayerDataManager()
-					.getPlayerData(e.getPlayer().getUniqueId().toString());
-			pd.addIp( e.getRealAddress().toString() );
-			Bukkit.broadcastMessage( ChatColor.GRAY + "HEIMVIK prøvde å logge på med ip'en: " + e.getRealAddress() );
-		}
-	}
+
 
 	/**
 	 * On join2.
@@ -91,6 +83,14 @@ public class PlayerDatalistener implements Listener {
 				+ ChatColor.BOLD + "VELKOMMEN TIL " + SH.NAME);
 		FancyMessages.sendTitle(e.getPlayer(), 10, 70, 40, ChatColor.GREEN
 				+ "Velkommen til " + SH.NAME, SH.MOTTO);
+	}
+	
+	@EventHandler
+	public void onChat(final AsyncPlayerChatEvent e){
+		if(SH.mutedPlayers.contains(e.getPlayer().getName())){
+			FancyMessages.sendActionBar(e.getPlayer(), ChatColor.RED + "Du er mutet og kan ikke snakke");
+			e.setCancelled(true);
+		}
 	}
 
 	/**

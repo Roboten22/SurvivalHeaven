@@ -35,3 +35,7 @@ commands:
   home:
   sethome:
   delhome:
+  tpa:
+  tpaccept:
+  m:
+  mute:

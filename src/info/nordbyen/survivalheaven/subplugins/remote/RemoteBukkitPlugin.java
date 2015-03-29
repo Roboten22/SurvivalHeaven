@@ -8,7 +8,6 @@
  */
 package info.nordbyen.survivalheaven.subplugins.remote;
 
-import info.nordbyen.survivalheaven.SH;
 import info.nordbyen.survivalheaven.api.subplugin.SubPlugin;
 
 import java.io.IOException;
@@ -246,7 +245,7 @@ public class RemoteBukkitPlugin extends SubPlugin {
 					}
 				}
 			} else {
-				SH.log("NULLL! OMGPOY!");
+				System.out.println("NULLL! OMGPOY!");
 			}
 			if (this.users.isEmpty()) {
 				log.log(Level.WARNING,

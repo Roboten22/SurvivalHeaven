@@ -19,14 +19,17 @@ public enum RankType {
 	
 	/** The banned. */
 	BANNED(0, "BANNED", "", ChatColor.GRAY), // spillere som er bannet her
+
 	/** The bruker. */
 	BRUKER(1, "BRUKER", "", ChatColor.RESET),
+
+        ARKITEKT(2, "ARKITEKT", "[Arkitekt] ", ChatColor.YELLOW),
 	
 	/** The moderator. */
-	MODERATOR(2, "MODERATOR", "[Mod] ", ChatColor.BLUE),
+	MODERATOR(3, "MODERATOR", "[Mod] ", ChatColor.BLUE),
 	
 	/** The administrator. */
-	ADMINISTRATOR(3, "ADMINISTRATOR", "[Admin] ", ChatColor.GOLD);
+	ADMINISTRATOR(4, "ADMINISTRATOR", "[Admin] ", ChatColor.GOLD);
 
 	/* Fjernet inntil vi trenger dem */
 	// SUPERMODERATOR( 4, "SUPERMODERATOR", "Mod+", ChatColor.BLUE ),
@@ -45,12 +48,12 @@ public enum RankType {
 		if (id == 1)
 			return BRUKER;
 		if (id == 2)
+                        return ARKITEKT;
+                if (id == 3)
 			return MODERATOR;
-		if (id == 3)
+		if (id == 4)
 			return ADMINISTRATOR;
-		SH.debug("Fant ikke rank med id: " + id,
-				"Printer stackstrace under...");
-		SH.debug((Object[]) (new Throwable()).getStackTrace());
+		SH.debug("Fant ikke rank med id: " + id);
 		return BRUKER;
 	}
 
@@ -66,10 +69,11 @@ public enum RankType {
 			return BANNED;
 		if (name.equalsIgnoreCase("bruker"))
 			return BRUKER;
+                if (name.equalsIgnoreCase("arkitekt") || name.equalsIgnoreCase("ark"))
+                        return ARKITEKT;
 		if (name.equalsIgnoreCase("mod") || name.equalsIgnoreCase("moderator"))
 			return MODERATOR;
-		if (name.equalsIgnoreCase("admin")
-				|| name.equalsIgnoreCase("administrator"))
+		if (name.equalsIgnoreCase("admin") || name.equalsIgnoreCase("administrator"))
 			return ADMINISTRATOR;
 		return null;
 	}

@@ -72,7 +72,7 @@ public class WarningManager implements IWarningManager {
 			createTable();
 			loadFromMysql();
 		} catch (final SQLException e) {
-			SH.log(
+			Bukkit.getConsoleSender().sendMessage(
 					ChatColor.RED + "Noe galt skjedde under loading av mysql");
 			e.printStackTrace();
 		}

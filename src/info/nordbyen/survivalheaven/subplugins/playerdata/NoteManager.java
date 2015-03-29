@@ -73,7 +73,7 @@ public class NoteManager implements INoteManager {
 			createTable();
 			loadFromMysql();
 		} catch (final SQLException e) {
-			SH.log(
+			Bukkit.getConsoleSender().sendMessage(
 					ChatColor.RED + "Noe galt skjedde under loading av mysql");
 			e.printStackTrace();
 		}

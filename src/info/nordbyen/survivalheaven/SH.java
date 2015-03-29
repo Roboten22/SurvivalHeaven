@@ -25,6 +25,7 @@ import info.nordbyen.survivalheaven.subplugins.blockprotection.BlockManager;
 import info.nordbyen.survivalheaven.subplugins.blockprotection.BlockProtection;
 import info.nordbyen.survivalheaven.subplugins.bossbar.BossbarAPI;
 import info.nordbyen.survivalheaven.subplugins.commands.Commands;
+import info.nordbyen.survivalheaven.subplugins.commands.commands.Mute;
 import info.nordbyen.survivalheaven.subplugins.groupmanager.FriendManager;
 import info.nordbyen.survivalheaven.subplugins.homes.HomeManager;
 import info.nordbyen.survivalheaven.subplugins.merchant.Merchant;
@@ -33,7 +34,6 @@ import info.nordbyen.survivalheaven.subplugins.playerdata.NoteManager;
 import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManager;
 import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManagerPlugin;
 import info.nordbyen.survivalheaven.subplugins.playerdata.WarningManager;
-import info.nordbyen.survivalheaven.subplugins.playerheads.PlayerHeads;
 import info.nordbyen.survivalheaven.subplugins.rankmanager.RankManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionUpdater;
@@ -55,6 +55,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -65,10 +66,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
+
 /**
  * The Class SH.
  */
 public class SH extends JavaPlugin implements ISH {
+	
+	public static ArrayList<String> mutedPlayers = new ArrayList<String>();
+
 
 	/** The debug. */
 	private final static boolean DEBUG = false; // TODO
@@ -107,7 +113,7 @@ public class SH extends JavaPlugin implements ISH {
 
 	/** The Constant NAME. */
 	public static final String NAME = ChatColor.RED + "Survival"
-			+ ChatColor.GRAY + "Heaven" + ChatColor.RESET;
+			+ ChatColor.GRAY + "Heaven" + ChatColor.LIGHT_PURPLE + "-ALPHA " + ChatColor.RESET;
 
 	/** The i survival heaven. */
 	private static ISH iSurvivalHeaven;
@@ -411,7 +417,6 @@ public class SH extends JavaPlugin implements ISH {
 		getSubPluginManager().addSubPlugin(
 				new PlayerDataManagerPlugin("PlayerDataManager"));
 		getSubPluginManager().addSubPlugin(new Commands("Kommandoer"));
-		getSubPluginManager().addSubPlugin(new PlayerHeads("SpillerHoder"));
 		// spm.addSubPlugin(new RemoteBukkitPlugin("RemoteConsole"));
 		// spm.addSubPlugin( new Ligg( "LiggTester" ) );
 		getAnnoSubPluginManager().addClass(InfinityDispenser.class);
@@ -436,6 +441,11 @@ public class SH extends JavaPlugin implements ISH {
 	 */
 	@Override
 	public void onEnable() {
+		
+		getServer().getWorld("NyVerden").loadChunk(317, 79);
+		getCommand("mute").setExecutor(new Mute(this));
+
+		
 		plugin = this;
 		iSurvivalHeaven = this;
 		version = this.getDescription().getVersion();
@@ -491,19 +501,6 @@ public class SH extends JavaPlugin implements ISH {
 		if (!DEBUG)
 			return;
 		for (final Object s : strings) {
-			
-			String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
-		    String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-		    String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-		    int lineNumber = Thread.currentThread().getStackTrace()[2].getLineNumber();
-			log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.YELLOW + className + "#" + methodName + "():" + lineNumber + ChatColor.AQUA + " called by:");
-			
-			fullClassName = Thread.currentThread().getStackTrace()[3].getClassName();
-		    className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-		    methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
-		    lineNumber = Thread.currentThread().getStackTrace()[3].getLineNumber();
-		    log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.YELLOW + className + "#" + methodName + "():" + lineNumber);
-			
 			log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.GRAY + s);
 		}
 	}

@@ -24,6 +24,8 @@ import info.nordbyen.survivalheaven.subplugins.commands.commands.Jobb;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.K;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.Kick;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.Killall;
+import info.nordbyen.survivalheaven.subplugins.commands.commands.M;
+import info.nordbyen.survivalheaven.subplugins.commands.commands.Mute;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.S;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.SS;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.ServerCommand;
@@ -31,6 +33,8 @@ import info.nordbyen.survivalheaven.subplugins.commands.commands.Sitt;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.Smelt;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.Sudo;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.TP;
+import info.nordbyen.survivalheaven.subplugins.commands.commands.TPA;
+import info.nordbyen.survivalheaven.subplugins.commands.commands.TPAccept;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.TPH;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.WB;
 import info.nordbyen.survivalheaven.subplugins.commands.commands.Who;
@@ -91,6 +95,11 @@ public class Commands extends SubPlugin {
 		getPlugin().getCommand("sitt").setExecutor(new Sitt());
 		getPlugin().getCommand("sudo").setExecutor(new Sudo());
 		getPlugin().getCommand("adminstick").setExecutor(new AdminStick());
+		getPlugin().getCommand("tpa").setExecutor(new TPA());
+		getPlugin().getCommand("tpaccept").setExecutor(new TPAccept());
+		getPlugin().getCommand("m").setExecutor(new M());
+		
+		
 
 		ServerCommand.initCommand();
 	}

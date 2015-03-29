@@ -51,7 +51,7 @@ public class SS implements CommandExecutor {
 								+ ChatColor.RED + ((Player) sender).getName()
 								+ ": " + ChatColor.GRAY + msg.toString());
 						if (!(sender instanceof Player)) {
-							SH.log(ChatColor.GOLD
+							System.out.println(ChatColor.GOLD
 									+ "[Stabsamtale] "
 									+ ((Player) sender).getDisplayName() + ": "
 									+ ChatColor.GRAY + msg.toString());

@@ -97,7 +97,9 @@ public class RegionUpdater extends SubPlugin {
 			IRankManager rm = SH.getManager().getRankManager();
 			RankType rank = rm.getRank(e.getPlayer().getUniqueId().toString());
 			if (rank != RankType.ADMINISTRATOR && rank != RankType.MODERATOR) {
-				e.setCancelled(true);
+				if(e.getClickedBlock().getType() != Material.ENDER_CHEST){
+					e.setCancelled(true);
+				}
 			}
 		}
 
@@ -121,10 +123,10 @@ public class RegionUpdater extends SubPlugin {
 					|| e.getEntityType() == EntityType.GUARDIAN) {
 				IRegionData rd = SH.getManager().getRegionManager()
 						.getRegionAt(e.getLocation());
+				
 				if (rd == null)
 					return;
-				if (rd.isMonsters())
-					return;
+				if (!rd.isMonsters())
 				e.setCancelled(true);
 			}
 		}
