@@ -6,6 +6,7 @@ TODO:
   - kode /homes <spiller> til stab
   - kode inventory gui
   - kode ferdig til BlockLag
+  - fikse auto afk ( av og på )
   - kode /back
   - kode gruppesystemer
   - kode bankystemer
