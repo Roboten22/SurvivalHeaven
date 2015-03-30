@@ -10,3 +10,9 @@ TODO:
   - kode gruppesystemer
   - kode bankystemer
   - kode shop
+  - kode minigames
+  - fikse /fisk
+  - oppdatere til 1.8.3
+
+Ting som kanskje kommer:
+  - Gruppesystemer med egne byer
