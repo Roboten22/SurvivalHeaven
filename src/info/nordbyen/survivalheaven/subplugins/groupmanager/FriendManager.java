@@ -51,12 +51,15 @@ public class FriendManager {
 	 *            the to
 	 */
 	public void addFriendrequest(String from, String to) {
+		SH.debug("from=" + from, "to=" + to, "prøver å legge til...");
 		if (!friendRequests.containsKey(to) || friendRequests.get(to) == null) {
+			SH.debug("har ikke to i listen fra før");
 			ArrayList<String> list = new ArrayList<String>();
 			list.add(from);
 			friendRequests.put(to, list);
 			return;
 		}
+		SH.debug("den har to i listen fra før");
 		friendRequests.get(to).add(from);
 	}
 
@@ -82,6 +85,10 @@ public class FriendManager {
 	 * @return the friendrequests to
 	 */
 	public ArrayList<String> getFriendrequestsTo(String name) {
+		SH.debug("name=" + name, 
+				"friendRequests.get(name)=" + friendRequests.get(name));
+		if(friendRequests.get(name) == null) 
+			friendRequests.put(name, new ArrayList<String>());
 		return friendRequests.get(name);
 	}
 
@@ -93,6 +100,8 @@ public class FriendManager {
 	 * @return the friends with
 	 */
 	public ArrayList<IPlayerData> getFriendsWith(IPlayerData pd) {
+		if(getFriendsWith(pd.getUUID()) == null) 
+			return new ArrayList<IPlayerData>();
 		return getFriendsWith(pd.getUUID());
 	}
 

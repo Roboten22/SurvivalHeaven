@@ -34,6 +34,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.material.Door;
@@ -120,14 +121,15 @@ public class RegionUpdater extends SubPlugin {
 					|| e.getEntityType() == EntityType.ENDERMAN
 					|| e.getEntityType() == EntityType.GHAST
 					|| e.getEntityType() == EntityType.WITHER
+					|| e.getEntityType() == EntityType.WITCH
 					|| e.getEntityType() == EntityType.GUARDIAN) {
 				IRegionData rd = SH.getManager().getRegionManager()
 						.getRegionAt(e.getLocation());
-				
+
 				if (rd == null)
 					return;
 				if (!rd.isMonsters())
-				e.setCancelled(true);
+					e.setCancelled(true);
 			}
 		}
 
@@ -167,6 +169,19 @@ public class RegionUpdater extends SubPlugin {
 		@EventHandler
 		public void onQuit(final PlayerQuitEvent e) {
 			playerRegions.remove(e.getPlayer().getUniqueId().toString());
+		}
+		
+		@EventHandler
+		public void onHunger( FoodLevelChangeEvent e ) {
+			if( !( e.getEntity() instanceof Player ) )
+				return;
+			Player p = (Player)e.getEntity();
+			if( !SH.getManager().getRegionManager().getRegionAt( p.getLocation() ).isInvincible() ) {
+				return;
+			}
+			if ( e.getFoodLevel() > p.getFoodLevel() )
+				return;
+			e.setCancelled( true );
 		}
 
 		/**
@@ -377,6 +392,13 @@ public class RegionUpdater extends SubPlugin {
 								Integer.MAX_VALUE, Integer.MIN_VALUE + 100,
 								true, true, true, false, false, false));
 
+		SH.getManager()
+		.getRegionManager()
+		.addRegion(
+				RegionData.createRegion(
+						new Location(Bukkit.getWorld("NyVerden"), -1631, 0, 146), 
+						"BlockLag", 400, 1000, false, true, true, false, true, false));
+
 		Bukkit.getPluginManager().registerEvents(new RegionUpdaterListener(),
 				getPlugin());
 		new RegionTeleportCommand();
@@ -422,8 +444,11 @@ public class RegionUpdater extends SubPlugin {
 		SH.getManager().getRankManager().updateNames();
 		if (region == null)
 			return;
-		// FancyMessages.sendActionBar(p, ChatColor.DARK_GREEN + ""
-		// + ChatColor.BOLD + "------[ " + region.getName() + " ]------");
+		if(region.getName().equals("BlockLag")) {
+			FancyMessages.sendTitle(p, 20, 50, 20, ChatColor.GREEN + "---[ "
+					+ region.getName() + " ]---", ChatColor.GRAY + "Velkommen til " + ChatColor.GREEN + "BlockLag city" + ChatColor.GRAY + ". En by av spillere for spillere");
+			return;
+		}
 		boolean pvp = region.isPvp();
 		FancyMessages.sendTitle(p, 20, 50, 20, ChatColor.GREEN + "---[ "
 				+ region.getName() + " ]---", pvp ? ChatColor.RED

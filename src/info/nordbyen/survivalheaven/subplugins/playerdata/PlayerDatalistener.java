@@ -21,7 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -41,6 +40,14 @@ public class PlayerDatalistener implements Listener {
 	@EventHandler( priority = EventPriority.LOWEST )
 	public void onJoin(final PlayerJoinEvent e) {
 		final Player p = e.getPlayer();
+		
+		for( Player o : Bukkit.getOnlinePlayers() ) {
+			if( o.getName().equals( p.getName() ) && !o.getUniqueId().toString().equals( p.getUniqueId().toString() )) {
+				o.kickPlayer( "En bug oppsto. Det fantes to av deg :o" );
+				SH.warning( "Fant en duplikat spiller: " + o.getName(), "Begge spiller objektene ble kicket...." );
+			}
+		}
+		
 		final IPlayerData pd = SH.getManager().getPlayerDataManager()
 				.getPlayerData(p.getUniqueId().toString());
 		if (pd != null) {
@@ -112,7 +119,6 @@ public class PlayerDatalistener implements Listener {
 	 * @param e
 	 *            the e
 	 */
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onQuit(final PlayerQuitEvent e) {
 		final Player p = e.getPlayer();

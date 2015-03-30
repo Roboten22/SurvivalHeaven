@@ -12,6 +12,8 @@ import info.nordbyen.survivalheaven.SH;
 import info.nordbyen.survivalheaven.api.blockdata.BlockPlacedType;
 import info.nordbyen.survivalheaven.api.playerdata.IPlayerData;
 import info.nordbyen.survivalheaven.api.util.FancyMessages;
+import info.nordbyen.survivalheaven.subplugins.regions.BlockLagManager;
+import info.nordbyen.survivalheaven.subplugins.regions.RegionData;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -57,7 +59,19 @@ public class BlockProtectionListener implements Listener {
 		final Block b = e.getBlock();
 		final Player p = e.getPlayer();
 		
-		if( !SH.getManager().getRegionManager().getRegionAt( b.getLocation() ).isBp() ) {
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( b.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, b ) ) {
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, b ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
 			return;
 		}
 		if ((b.getType() != Material.AIR) && (b.getType() != Material.WATER)
@@ -95,8 +109,20 @@ public class BlockProtectionListener implements Listener {
 
 
 
-		if( !SH.getManager().getRegionManager().getRegionAt( b.getLocation() ).isBp() ) {
-				return;
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( b.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, b ) ) {
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, b ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
+			return;
 		}
 
 		if (e.getAction() == Action.PHYSICAL) {
@@ -201,7 +227,19 @@ public class BlockProtectionListener implements Listener {
 		Block block = frame.getLocation().getWorld()
 				.getBlockAt(frame.getLocation());
 		
-		if(! SH.getManager().getRegionManager().getRegionAt( block.getLocation() ).isBp() ) {
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( block.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, block ) ) {
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, block ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
 			return;
 		}
 		
@@ -250,7 +288,19 @@ public class BlockProtectionListener implements Listener {
 		Block block = frame.getLocation().getWorld()
 				.getBlockAt(frame.getLocation());
 		
-		if( !SH.getManager().getRegionManager().getRegionAt( block.getLocation() ).isBp() ) {
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( block.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, block ) ) {
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, block ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
 			return;
 		}
 		
@@ -301,7 +351,19 @@ public class BlockProtectionListener implements Listener {
 		Block block = frame.getLocation().getWorld()
 				.getBlockAt(frame.getLocation());
 		
-		if( !SH.getManager().getRegionManager().getRegionAt( block.getLocation() ).isBp() ) {
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( block.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, block ) ) {
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, block ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
 			return;
 		}
 		
@@ -342,7 +404,20 @@ public class BlockProtectionListener implements Listener {
 		final Block b = e.getBlock();
 		final Player p = e.getPlayer();
 
-		if(! SH.getManager().getRegionManager().getRegionAt( b.getLocation() ).isBp() ) {
+		RegionData region = SH.getManager().getRegionManager().getRegionAt( b.getLocation() );
+		
+		/* BLOCKLAG */
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().canBreak( p, b ) ) {
+			SH.debug("p=" + p, "b=" + b, "kan ikke ødelegge");
+			e.setCancelled( true );
+			FancyMessages.sendActionBar( p, ChatColor.RED + "Bare medlemmer i byen kan endre blokker her" );
+			return;
+		}
+		if( region.getName().equals( "BlockLag" ) && !BlockLagManager.getInstance().useBlockProtection( p, b ) ) 
+			return;
+		/*/BLOCKLAG */
+		
+		if( !region.isBp() ) {
 			return;
 		}
 		

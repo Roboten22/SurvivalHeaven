@@ -8,30 +8,25 @@
  */
 package info.nordbyen.survivalheaven.subplugins.uendeligdropper;
 
+import info.nordbyen.survivalheaven.SH;
+import info.nordbyen.survivalheaven.api.rankmanager.RankType;
+import info.nordbyen.survivalheaven.api.util.FancyMessages;
 import info.nordbyen.survivalheaven.subplugins.uendeligdropper.files.Dispensers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.block.Dropper;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-/**
- * The listener interface for receiving infinityDispenser events. The class that
- * is interested in processing a infinityDispenser event implements this
- * interface, and the object created with that class is registered with a
- * component using the component's
- * <code>addInfinityDispenserListener<code> method. When
- * the infinityDispenser event occurs, that object's appropriate
- * method is invoked.
- *
- * @see InfinityDispenserEvent
- */
 public class InfinityDispenserListener implements Listener {
 
 	/**
@@ -96,5 +91,22 @@ public class InfinityDispenserListener implements Listener {
 			} catch (final ClassCastException localClassCastException) {
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onDispenserInteract( PlayerInteractEvent e ) {
+		Block b = e.getClickedBlock();
+		if( b == null )
+			return;
+		if( b.getType() != Material.DISPENSER && b.getType() != Material.DROPPER )
+			return;
+		if( !Dispensers.isDispenser(b.getLocation()) && !Util.getSign(b)) 
+			return;
+		Player p = e.getPlayer();
+		RankType rank = SH.getManager().getRankManager().getRank(p.getUniqueId().toString());
+		if( rank.getId() >= RankType.MODERATOR.getId() )
+			return;
+		e.setCancelled(true);
+		FancyMessages.sendActionBar(p, ChatColor.RED + "Dette er en UendeligDropper");
 	}
 }

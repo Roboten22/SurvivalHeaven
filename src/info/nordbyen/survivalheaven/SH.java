@@ -25,7 +25,6 @@ import info.nordbyen.survivalheaven.subplugins.blockprotection.BlockManager;
 import info.nordbyen.survivalheaven.subplugins.blockprotection.BlockProtection;
 import info.nordbyen.survivalheaven.subplugins.bossbar.BossbarAPI;
 import info.nordbyen.survivalheaven.subplugins.commands.Commands;
-import info.nordbyen.survivalheaven.subplugins.commands.commands.Mute;
 import info.nordbyen.survivalheaven.subplugins.groupmanager.FriendManager;
 import info.nordbyen.survivalheaven.subplugins.homes.HomeManager;
 import info.nordbyen.survivalheaven.subplugins.merchant.Merchant;
@@ -35,6 +34,7 @@ import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManager;
 import info.nordbyen.survivalheaven.subplugins.playerdata.PlayerDataManagerPlugin;
 import info.nordbyen.survivalheaven.subplugins.playerdata.WarningManager;
 import info.nordbyen.survivalheaven.subplugins.rankmanager.RankManager;
+import info.nordbyen.survivalheaven.subplugins.regions.BlockLagManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionManager;
 import info.nordbyen.survivalheaven.subplugins.regions.RegionUpdater;
 import info.nordbyen.survivalheaven.subplugins.serverutil.ServerUtils;
@@ -77,7 +77,8 @@ public class SH extends JavaPlugin implements ISH {
 
 
 	/** The debug. */
-	private final static boolean DEBUG = false; // TODO
+	private final static boolean DEBUG = true; // TODO
+	private final static boolean MYSQL_DEBUG = false; // TODO
 
 	/**
 	 * Gets the manager.
@@ -357,7 +358,7 @@ public class SH extends JavaPlugin implements ISH {
 			ReadableByteChannel rbc = Channels.newChannel(url.openStream());
 			FileOutputStream fos = new FileOutputStream(path);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			log("Finished downloading " + split[split.length - 1] + ". Loading dependecy");
+			info("Finished downloading " + split[split.length - 1] + ". Loading dependecy");
 			Bukkit.getServer().getPluginManager().loadPlugin(new File(path));
 			fos.close();
 			return true;
@@ -417,6 +418,8 @@ public class SH extends JavaPlugin implements ISH {
 		getSubPluginManager().addSubPlugin(
 				new PlayerDataManagerPlugin("PlayerDataManager"));
 		getSubPluginManager().addSubPlugin(new Commands("Kommandoer"));
+		getSubPluginManager().addSubPlugin(new InventoryMenuTester("MenuTester"));
+		getSubPluginManager().addSubPlugin(new BlockLagManager.BlockLagPlugin("BlockLagManager"));
 		// spm.addSubPlugin(new RemoteBukkitPlugin("RemoteConsole"));
 		// spm.addSubPlugin( new Ligg( "LiggTester" ) );
 		getAnnoSubPluginManager().addClass(InfinityDispenser.class);
@@ -442,18 +445,16 @@ public class SH extends JavaPlugin implements ISH {
 	@Override
 	public void onEnable() {
 		
-		getServer().getWorld("NyVerden").loadChunk(317, 79);
-		getCommand("mute").setExecutor(new Mute(this));
-
+		//getServer().getWorld("NyVerden").loadChunk(317, 79);
 		
 		plugin = this;
 		iSurvivalHeaven = this;
 		version = this.getDescription().getVersion();
 		name = this.getDescription().getName();
-		log(ChatColor.YELLOW + "STARTER PLUGIN " + this.toString());
-		log(ChatColor.GREEN + "******************************************************************");
-		log(ChatColor.RESET + "Starter " + NAME + ChatColor.RESET + " v. " + ChatColor.YELLOW + version);
-		log(ChatColor.GREEN + "------------------------------------------------------------------");
+		info(ChatColor.YELLOW + "STARTER PLUGIN " + this.toString());
+		info(ChatColor.GREEN + "******************************************************************");
+		info(ChatColor.RESET + "Starter " + NAME + ChatColor.RESET + " v. " + ChatColor.YELLOW + version);
+		info(ChatColor.GREEN + "------------------------------------------------------------------");
 		getAnnoSubPluginManager();
 		getBlockManager();
 		getMysqlManager();
@@ -466,17 +467,17 @@ public class SH extends JavaPlugin implements ISH {
 		// loadJars(); TODO Fikse error her
 		registerSubPlugins();
 		enableSubPlugins();
-		log(ChatColor.GOLD + "Sjekker om alle nødvendige plugins er her...");
+		info(ChatColor.GOLD + "Sjekker om alle nødvendige plugins er her...");
 		Plugin pex = Bukkit.getPluginManager().getPlugin("PermissionsEx");
 		if (pex == null) {
-			log(ChatColor.GOLD + "PermissionsEx mangler. Starter nedlasting....");
+			info(ChatColor.GOLD + "PermissionsEx mangler. Starter nedlasting....");
 			try {
 				downloadPlugin("31279");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		log(ChatColor.GREEN + "******************************************************************");
+		info(ChatColor.GREEN + "******************************************************************");
 	}
 	
 	/*
@@ -486,22 +487,82 @@ public class SH extends JavaPlugin implements ISH {
 	 */
 	@Override
 	public void onDisable() {
-		log(ChatColor.YELLOW + "STOPPER PLUGIN " + this.toString());
+		info(ChatColor.YELLOW + "STOPPER PLUGIN " + this.toString());
 		disableSubPlugins();
 		unregisterSubPlugins();
 	}
 
-	public static void log(final Object... strings) {
+	public static void info(final Object... strings) {
 		for (final Object s : strings) {
 			Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + s);
 		}
+	}
+	
+	public static void mysql_debug(final Object... strings) {
+		if (!MYSQL_DEBUG)
+			return;
+		for (final Object s : strings) {
+			info(ChatColor.RED + "[ERROR] " + ChatColor.GRAY + s);
+		}
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[2].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[2].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[2].getLineNumber() );
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[3].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[3].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[3].getLineNumber() );
+		info("");
+	}
+	
+	public static void error(final Object... strings) {
+		if (!DEBUG)
+			return;
+		for (final Object s : strings) {
+			info(ChatColor.RED + "[ERROR] " + ChatColor.GRAY + s);
+		}
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[2].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[2].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[2].getLineNumber() );
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[3].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[3].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[3].getLineNumber() );
+		info("");
+	}
+	
+	public static void warning(final Object... strings) {
+		if (!DEBUG)
+			return;
+		for (final Object s : strings) {
+			info(ChatColor.GOLD + "[WARNING] " + ChatColor.GRAY + s);
+		}
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[2].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[2].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[2].getLineNumber() );
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[3].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[3].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[3].getLineNumber() );
+		info("");
 	}
 	
 	public static void debug(final Object... strings) {
 		if (!DEBUG)
 			return;
 		for (final Object s : strings) {
-			log(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.GRAY + s);
+			info(ChatColor.LIGHT_PURPLE + "[DEBUG] " + ChatColor.GRAY + s);
 		}
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[2].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[2].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[2].getLineNumber() );
+		info("\t" + ChatColor.GRAY + 
+				Thread.currentThread().getStackTrace()[3].getClassName() + "#" + 
+				Thread.currentThread().getStackTrace()[3].getMethodName() + ":" + 
+				Thread.currentThread().getStackTrace()[3].getLineNumber() );
+		info("");
 	}
 }

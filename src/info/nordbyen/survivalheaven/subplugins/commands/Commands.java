@@ -98,7 +98,7 @@ public class Commands extends SubPlugin {
 		getPlugin().getCommand("tpa").setExecutor(new TPA());
 		getPlugin().getCommand("tpaccept").setExecutor(new TPAccept());
 		getPlugin().getCommand("m").setExecutor(new M());
-		
+		getPlugin().getCommand("mute").setExecutor(new Mute());
 		
 
 		ServerCommand.initCommand();
