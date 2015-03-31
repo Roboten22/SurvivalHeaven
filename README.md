@@ -13,6 +13,7 @@ TODO:
   - kode shop
   - kode minigames
   - oppdatere til 1.8.3
+  - mekke med socialspy?
 
 Ting som kanskje kommer:
   - Gruppesystemer med egne byer
